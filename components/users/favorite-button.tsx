@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { HeartIcon } from "@/components/ui/icons";
 import { useToggleFavorite } from "@/hooks/use-favorites";
-import type { User } from "@/types";
+import type { UserWithMatch } from "@/types";
 
-export function FavoriteButton({ user }: { user: User }) {
+export function FavoriteButton({ user }: { user: UserWithMatch }) {
   const { isFavorite, isLoading, isPending, isError, toggle } = useToggleFavorite(user);
   return (
     <div className="flex flex-col gap-1">

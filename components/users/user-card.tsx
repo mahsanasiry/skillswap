@@ -40,7 +40,13 @@ function matchLabel(user: UserWithMatch): string | null {
   return user.match.mutual ? `Mutual match, ${user.match.score}%` : `Partial match, ${user.match.score}%`;
 }
 
-export function UserCard({ user }: { user: UserWithMatch }) {
+export function UserCard({
+  user,
+  extraAction,
+}: {
+  user: UserWithMatch;
+  extraAction?: React.ReactNode;
+}) {
   const label = matchLabel(user);
   return (
     <article className="flex h-full flex-col gap-4 rounded-xl border border-line bg-surface p-5">
@@ -67,15 +73,17 @@ export function UserCard({ user }: { user: UserWithMatch }) {
       <ChipGroup label="Teaches" kind="teach" ids={user.teaches.map((t) => t.skillId)} />
       <ChipGroup label="Wants to learn" kind="learn" ids={user.wantsToLearn} />
 
-      <ButtonLink
-        href={`/profile/${user.id}`}
-        variant="secondary"
-        size="sm"
-        className="mt-auto"
-        aria-label={`View ${user.name}'s profile`}
-      >
-        View profile
-      </ButtonLink>
+      <div className="mt-auto flex flex-wrap gap-2">
+        <ButtonLink
+          href={`/profile/${user.id}`}
+          variant="secondary"
+          size="sm"
+          aria-label={`View ${user.name}'s profile`}
+        >
+          View profile
+        </ButtonLink>
+        {extraAction}
+      </div>
     </article>
   );
 }

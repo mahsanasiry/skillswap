@@ -207,7 +207,7 @@ export const handlers = [
     const me = currentUser(request);
     const views: FavoriteView[] = readDb()
       .favorites.filter((f) => f.userId === me.id)
-      .map((f) => ({ ...f, user: usersById.get(f.targetUserId) as User }));
+      .map((f) => ({ ...f, user: withMatch(me, usersById.get(f.targetUserId) as User) }));
     return HttpResponse.json(views);
   }),
 
@@ -224,11 +224,13 @@ export const handlers = [
 
     const db = readDb();
     const existing = db.favorites.find((f) => f.userId === me.id && f.targetUserId === target.id);
-    if (existing) return HttpResponse.json({ ...existing, user: target }, { status: 200 });
+    if (existing) {
+      return HttpResponse.json({ ...existing, user: withMatch(me, target) }, { status: 200 });
+    }
 
     const created = { id: newId("f"), userId: me.id, targetUserId: target.id };
     writeDb({ ...db, favorites: [...db.favorites, created] });
-    return HttpResponse.json({ ...created, user: target }, { status: 201 });
+    return HttpResponse.json({ ...created, user: withMatch(me, target) }, { status: 201 });
   }),
 
   http.delete("*/api/favorites/:id", async ({ request, params }) => {
