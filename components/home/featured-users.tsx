@@ -5,14 +5,23 @@ import { ButtonLink } from "@/components/ui/button";
 import { EmptyState, ErrorState } from "@/components/ui/states";
 import { useUsers } from "@/hooks/use-users";
 
-export function FeaturedUsers() {
+export function FeaturedUsers({
+  title = "People who fit you best",
+  embedded = false,
+}: {
+  title?: string;
+  embedded?: boolean; // true when the page already provides the width and spacing
+}) {
   const { data, isPending, isError, refetch } = useUsers({ sort: "relevant", pageSize: 3 });
 
   return (
-    <section aria-labelledby="people-title" className="mx-auto max-w-6xl px-4 pb-14">
+    <section
+      aria-labelledby="people-title"
+      className={embedded ? "" : "mx-auto max-w-6xl px-4 pb-14"}
+    >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <h2 id="people-title" className="text-3xl font-semibold tracking-tight">
-          People who fit you best
+          {title}
         </h2>
         <ButtonLink href="/discover" variant="secondary" size="sm">
           See everyone

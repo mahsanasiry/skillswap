@@ -43,7 +43,7 @@ export type SwapRequestView = SwapRequest & {
   learnSkill: Skill;
 };
 
-export type FavoriteView = Favorite & { user: User };
+export type FavoriteView = Favorite & { user: UserWithMatch };
 
 export type Paginated<T> = {
   items: T[];
