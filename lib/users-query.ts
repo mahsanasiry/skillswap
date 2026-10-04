@@ -41,8 +41,8 @@ function matchesText(user: UserWithMatch, q: string, skillsById: Map<string, Ski
     user.name,
     user.role,
     user.location,
+    // Only skills they teach: this page is for finding teachers.
     ...user.teaches.map((t) => skillsById.get(t.skillId)?.name ?? ""),
-    ...user.wantsToLearn.map((id) => skillsById.get(id)?.name ?? ""),
   ];
   const needle = q.toLowerCase();
   return names.some((text) => text.toLowerCase().includes(needle));
@@ -87,4 +87,20 @@ export function queryUsers(
     pageSize: query.pageSize,
     totalPages,
   };
+}
+
+/**
+ * The reverse of parseUsersQuery: turns filters into URL parameters.
+ * Default values are left out so the address stays short and clean.
+ */
+export function buildUsersSearchParams(query: Partial<UsersQuery>): URLSearchParams {
+  const params = new URLSearchParams();
+  if (query.q) params.set("q", query.q);
+  if (query.skill) params.set("skill", query.skill);
+  if (query.level) params.set("level", query.level);
+  if (query.category) params.set("category", query.category);
+  if (query.availability) params.set("availability", query.availability);
+  if (query.sort && query.sort !== "relevant") params.set("sort", query.sort);
+  if (query.page && query.page > 1) params.set("page", String(query.page));
+  return params;
 }
