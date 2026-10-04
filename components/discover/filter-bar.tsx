@@ -3,10 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "@/components/ui/icons";
 import { SelectField } from "@/components/ui/select-field";
+import { capitalize } from "@/lib/format";
 import { AVAILABILITIES, CATEGORIES, LEVELS } from "@/lib/schemas";
 import type { Availability, Category, Level, Skill, UserSort, UsersQuery } from "@/types";
-
-const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 const SORT_OPTIONS: { value: UserSort; label: string }[] = [
   { value: "relevant", label: "Most relevant" },
