@@ -33,6 +33,12 @@ describe("users", () => {
     expect(byPlace.items.map((u) => u.name)).toEqual(["Alex Rivera"]);
   });
 
+  it("search only finds teachers, not people who want to learn the skill", async () => {
+    // Diego wants to learn yoga, but only Oliver teaches it.
+    const result = await api.getUsers({ q: "yoga", pageSize: 50 });
+    expect(result.items.map((u) => u.name)).toEqual(["Oliver Smith"]);
+  });
+
   it("returns an empty list (not an error) when nothing matches", async () => {
     const result = await api.getUsers({ q: "zzzz-no-such-skill" });
     expect(result.items).toEqual([]);
