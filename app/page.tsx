@@ -1,13 +1,17 @@
-import { DataCheck } from "@/components/dev/data-check";
+import { Cta } from "@/components/home/cta";
+import { FeaturedSkills } from "@/components/home/featured-skills";
+import { FeaturedUsers } from "@/components/home/featured-users";
+import { Hero } from "@/components/home/hero";
+import { HowItWorks } from "@/components/home/how-it-works";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center gap-4 px-6 py-16">
-      <h1 className="text-4xl font-semibold tracking-tight">SkillSwap</h1>
-      <p className="text-lg text-ink-soft">
-        The data layer is ready. The real pages arrive in the next steps.
-      </p>
-      <DataCheck />
+    <main id="main" className="flex-1">
+      <Hero />
+      <HowItWorks />
+      <FeaturedSkills />
+      <FeaturedUsers />
+      <Cta />
     </main>
   );
 }
