@@ -2,6 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { DemoUserProvider } from "@/components/providers/demo-user-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -55,5 +57,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <DemoUserProvider>{children}</DemoUserProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 }
