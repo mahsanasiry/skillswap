@@ -145,7 +145,7 @@ describe("RequestForm: sending", () => {
 
     expect(await screen.findByRole("heading", { name: "Request sent" })).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Nina Kowalski will see your request");
-    expect(screen.getByRole("link", { name: "View your requests" })).toHaveAttribute("href", "/requests");
+    expect(screen.getByRole("link", { name: "View your requests" })).toHaveAttribute("href", "/requests?tab=sent");
 
     const sent = await api.getRequests("sent");
     const created = sent.find((r) => r.receiver.id === "u28" && r.status === "pending");
@@ -182,14 +182,29 @@ describe("RequestForm: sending", () => {
   });
 
   it("disables the button while sending, so it cannot be sent twice", async () => {
-    await setup("u28");
-    await userEvent.click(screen.getByRole("button", { name: "Send request" }));
-    expect(await screen.findByRole("button", { name: "Sending..." })).toBeDisabled();
-    await screen.findByRole("heading", { name: "Request sent" });
-    const pendingToNina = (await api.getRequests("sent")).filter(
-      (r) => r.receiver.id === "u28" && r.status === "pending",
+    // Hold the server's answer so we can look at the form while it is still sending.
+    let calls = 0;
+    let release: () => void = () => {};
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    server.use(
+      http.post("*/api/requests", async () => {
+        calls += 1;
+        await gate;
+        return HttpResponse.json({ id: "r_test" }, { status: 201 });
+      }),
     );
-    expect(pendingToNina).toHaveLength(1);
+
+    await setup("u28");
+    await send();
+    const sending = await screen.findByRole("button", { name: "Sending..." });
+    expect(sending).toBeDisabled();
+    await userEvent.click(sending); // a second click does nothing
+
+    release();
+    expect(await screen.findByRole("heading", { name: "Request sent" })).toBeInTheDocument();
+    expect(calls).toBe(1);
   });
 });
 
