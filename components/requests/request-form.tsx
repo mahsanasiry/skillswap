@@ -95,7 +95,7 @@ function RequestFormFields({ receiver, onClose, skills }: Props & { skills: Skil
           status on the Requests page.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <ButtonLink href="/requests">View your requests</ButtonLink>
+          <ButtonLink href="/requests?tab=sent">View your requests</ButtonLink>
           <Button variant="secondary" onClick={onClose}>
             Close
           </Button>
