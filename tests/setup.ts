@@ -28,6 +28,25 @@ beforeAll(() => {
   });
 });
 
+// Count requests the mock server is still handling. A test can end while one is
+// in flight (for example a click it did not wait for); without this, that request
+// would finish during the NEXT test and change its data.
+let inFlight = 0;
+server.events.on("request:start", () => {
+  inFlight += 1;
+});
+server.events.on("request:end", () => {
+  inFlight = Math.max(0, inFlight - 1);
+});
+
+async function settleRequests(timeoutMs = 500) {
+  const deadline = Date.now() + timeoutMs;
+  while (inFlight > 0 && Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  inFlight = 0; // a request that never ends (some tests do that on purpose) must not block later tests
+}
+
 beforeEach(() => {
   window.localStorage.clear();
   delete document.documentElement.dataset.theme;
@@ -38,8 +57,9 @@ beforeEach(() => {
   resetDb();
 });
 
-afterEach(() => {
+afterEach(async () => {
   cleanup();
+  await settleRequests();
   server.resetHandlers();
 });
 
