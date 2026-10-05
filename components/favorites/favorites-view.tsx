@@ -47,11 +47,11 @@ export function FavoritesView() {
     remove.mutate(favorite.id, { onError: () => setNotice("") });
   }
 
-  const failed =
-    remove.isError &&
-    (remove.error instanceof ApiError
-      ? remove.error.message
-      : "We couldn't remove that person. Try again.");
+  const failed = remove.isError
+    ? `We couldn't remove that person. ${
+        remove.error instanceof ApiError ? remove.error.message : "Try again."
+      }`
+    : "";
 
   return (
     <div className="flex flex-col gap-4">
@@ -65,7 +65,7 @@ export function FavoritesView() {
           role="alert"
           className="rounded-lg border border-red-600 p-3 text-sm font-medium text-red-700 dark:text-red-400"
         >
-          We couldn&apos;t remove that person. {failed}
+          {failed}
         </p>
       )}
 
