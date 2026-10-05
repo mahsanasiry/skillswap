@@ -101,7 +101,8 @@ describe("Favorites: removing", () => {
     window.localStorage.setItem("skillswap:simulate-error", "1");
     await userEvent.click(screen.getByRole("button", { name: "Remove Alex Rivera from favorites" }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("We couldn't remove that person.");
+    const alert = await screen.findByRole("alert");
+    expect(alert.textContent).toBe("We couldn't remove that person. The server is not responding.");
     expect(names()).toContain("Alex Rivera"); // the list stays visible and complete
     expect(screen.queryByText("Removed Alex Rivera from favorites.")).not.toBeInTheDocument();
 

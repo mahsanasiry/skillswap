@@ -3,10 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { DashboardView } from "@/components/dashboard/dashboard-view";
 import { FavoritesView } from "@/components/favorites/favorites-view";
+import { RequestsView } from "@/components/requests/requests-view";
 import { users } from "@/data/users";
 import { api } from "@/lib/api";
 import { getMatch } from "@/lib/matching";
 import { setDemoUserId } from "@/lib/session";
+import { Suspense } from "react";
+import { navigation } from "./navigation";
 import { renderWithProviders } from "./test-utils";
 
 async function ready() {
@@ -66,9 +69,9 @@ describe("Dashboard: recent requests", () => {
     const row = (i: number) => within(rows[i]);
     expect(row(0).getByText("Zoe Anderson")).toBeInTheDocument();
     expect(row(0).getByText("Pending")).toBeInTheDocument();
-    expect(row(0).getByText(/Received from them/)).toBeInTheDocument();
+    expect(row(0).getByText(/They asked you/)).toBeInTheDocument();
     expect(row(1).getByText("Alex Rivera")).toBeInTheDocument();
-    expect(row(1).getByText(/Sent to them/)).toBeInTheDocument();
+    expect(row(1).getByText(/You asked them/)).toBeInTheDocument();
     expect(row(4).getByText("Nina Kowalski")).toBeInTheDocument();
     expect(row(4).getByText("Accepted")).toBeInTheDocument();
   });
@@ -131,5 +134,21 @@ describe("Dashboard: stays in step with the other pages", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "Remove Alex Rivera from favorites" }));
     await waitFor(() => expect(stat("Favorites")).toHaveTextContent("2"));
+  });
+
+  it("updates the pending number after answering a request on the Requests page", async () => {
+    navigation.pathname = "/requests/";
+    renderWithProviders(
+      <Suspense fallback={null}>
+        <DashboardView />
+        <RequestsView />
+      </Suspense>,
+    );
+    await screen.findByRole("heading", { level: 1 });
+    await screen.findByRole("tablist", { name: "Requests" });
+    expect(stat("Pending requests")).toHaveTextContent("3");
+
+    await userEvent.click(screen.getByRole("button", { name: "Accept request from Zoe Anderson" }));
+    await waitFor(() => expect(stat("Pending requests")).toHaveTextContent("2"));
   });
 });

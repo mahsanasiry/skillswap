@@ -41,7 +41,7 @@ export function RecentRequests({ requests, me }: { requests: SwapRequestView[]; 
                         </Link>
                       </p>
                       <p className="text-sm text-ink-soft">
-                        {received ? "Received from them" : "Sent to them"} · {statusLine(request)}
+                        {received ? "They asked you" : "You asked them"} · {statusLine(request)}
                       </p>
                     </div>
                   </div>
