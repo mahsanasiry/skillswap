@@ -104,6 +104,7 @@ export function RequestsView() {
       <Tabs tabs={tabs} value={tab} onChange={changeTab} idPrefix="requests" label="Requests" />
 
       <div id="requests-panel" role="tabpanel" aria-labelledby={`requests-tab-${tab}`} tabIndex={0}>
+        <h2 className="sr-only">{tabs.find((t) => t.id === tab)?.label} requests</h2>
         <p role="status" aria-live="polite" className="mb-2 min-h-6 text-sm font-medium">
           {notice}
         </p>

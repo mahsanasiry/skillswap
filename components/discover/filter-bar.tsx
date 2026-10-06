@@ -63,7 +63,7 @@ export function FilterBar({
             value={text}
             onChange={(event) => onTextChange(event.target.value)}
             placeholder="Try React, Spanish, designer or Madrid"
-            className="h-11 w-full rounded-lg border border-line bg-paper pl-10 pr-3 text-ink placeholder:text-ink-soft"
+            className="h-11 w-full rounded-lg border border-control bg-paper pl-10 pr-3 text-ink placeholder:text-ink-soft"
           />
         </div>
       </form>

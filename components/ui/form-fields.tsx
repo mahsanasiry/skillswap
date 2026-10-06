@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 export const controlClass =
-  "w-full rounded-lg border border-line bg-surface px-3 text-ink placeholder:text-ink-soft aria-[invalid=true]:border-red-600";
+  "w-full rounded-lg border border-control bg-surface px-3 text-ink placeholder:text-ink-soft aria-[invalid=true]:border-red-600";
 
 /** A label, the control, an optional hint and an error message, wired together. */
 export function Field({
