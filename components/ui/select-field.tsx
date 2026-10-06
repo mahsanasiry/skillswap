@@ -25,7 +25,7 @@ export function SelectField({
         id={id}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full rounded-lg border border-line bg-surface px-3 text-ink"
+        className="h-11 w-full rounded-lg border border-control bg-surface px-3 text-ink"
       >
         {placeholder !== undefined && <option value="">{placeholder}</option>}
         {options.map((option) => (

@@ -84,6 +84,7 @@ export function DiscoverView() {
       />
 
       <div ref={resultsTop} className="scroll-mt-24" aria-busy={isFetching}>
+        <h2 className="sr-only">Results</h2>
         <p role="status" aria-live="polite" className="mb-4 text-sm text-ink-soft">
           {isError
             ? ""

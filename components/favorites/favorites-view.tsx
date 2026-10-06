@@ -55,6 +55,7 @@ export function FavoritesView() {
 
   return (
     <div className="flex flex-col gap-4">
+      <h2 className="sr-only">Saved people</h2>
       <p role="status" aria-live="polite" className="min-h-6 font-medium">
         {notice ||
           (items.length > 0 ? `${items.length} ${items.length === 1 ? "person" : "people"} saved` : "")}

@@ -14,7 +14,7 @@ export function DemoUserSwitcher() {
         id="demo-user"
         value={user.id}
         onChange={(event) => switchUser(event.target.value)}
-        className="h-11 rounded-lg border border-line bg-surface px-3 text-ink"
+        className="h-11 rounded-lg border border-control bg-surface px-3 text-ink"
       >
         {demoUsers.map((demoUser) => (
           <option key={demoUser.id} value={demoUser.id}>

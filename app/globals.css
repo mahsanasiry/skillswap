@@ -8,7 +8,8 @@
   --surface: #ffffff;
   --ink: #101828;
   --ink-soft: #475467;
-  --line: #d9dee7;
+  --line: #d9dee7; /* decoration only: dividers and card edges */
+  --control: #7d8797; /* the edge of inputs and selects: 3:1 contrast */
   --teach: #0f766e; /* skills someone teaches */
   --teach-soft: #d9f2ee;
   --learn: #7c3aed; /* skills someone wants to learn */
@@ -22,6 +23,7 @@
   --ink: #f0f3f6;
   --ink-soft: #a6b0bd;
   --line: #2c333d;
+  --control: #6e7a8a;
   --teach: #4fd1c0;
   --teach-soft: #12312d;
   --learn: #b79cf5;
@@ -35,6 +37,7 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
+  --color-control: var(--control);
   --color-teach: var(--teach);
   --color-teach-soft: var(--teach-soft);
   --color-learn: var(--learn);

@@ -48,7 +48,7 @@ export function Hero() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Try React, Spanish or Figma"
-              className="h-11 w-full rounded-lg border border-line bg-surface pl-10 pr-3 text-ink placeholder:text-ink-soft"
+              className="h-11 w-full rounded-lg border border-control bg-surface pl-10 pr-3 text-ink placeholder:text-ink-soft"
             />
           </div>
           <Button type="submit">Search</Button>
